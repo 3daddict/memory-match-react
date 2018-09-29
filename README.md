@@ -1,6 +1,6 @@
-# React Starter
+# Memory Match Game React
 
-> This repo contains boilerplate code to aid in the creation of a new React app with Redux. Follow the below setup instructions to get started.
+> Basic memeory match game using ReactJS
 
 ### Setup Instructions
 
@@ -8,7 +8,7 @@
 > 1. Clone your forked copy of this repo
 >    - `git clone https://github.com/[Your Username]/react_starter.git`
 > 1. Change directory into the newly cloned repo
->    - `cd react_starter`
+>    - `cd memory-match-react`
 > 1. Install dependencies 
 >    - `npm install`
 > 1. Start dev server
