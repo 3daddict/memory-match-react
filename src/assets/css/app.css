@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#gameArea {
+    width: 100vw;
+    height: 100vh;
+
+}
+.card {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    float: left;
+    border: 1px black solid;
+    box-sizing: border-box;
+}
