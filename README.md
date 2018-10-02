@@ -2,6 +2,11 @@
 
 > Basic memeory match game using ReactJS
 
+### Contribution rules
+* Project must work when opening npm start
+* Starting with base code, please add style and functionality
+* Add your name to the contributers.js file (needs to be created)
+
 ### Setup Instructions
 
 > 1. Fork this repo
