@@ -1,4 +1,5 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function Card(props){
     function cardHandleClick(){
@@ -18,7 +19,7 @@ function Card(props){
                     left: '0',
                     top: '0',
                     display: props.display ? 'none' : 'block'
-                    }} />
+                    }} ><FontAwesomeIcon icon="spa" size="5x" style={{position: 'absolute',left:'30%',top:'20%'}}/></div>
             </div>
 }
 
