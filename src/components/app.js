@@ -19,6 +19,7 @@ class App extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
     render() {
+        this.checkForMatch();
         return (
             <div className="App">
                 <div id="gameArea">
@@ -26,6 +27,42 @@ class App extends Component {
                 </div>
             </div>
         );
+    }
+
+    hideCards(onSetState = () => {}) {
+        setTimeout(() => {
+            this.setState({
+                cardRevealStates: new Array(this.cards.length).fill(false)
+            }, onSetState())
+        }, 500)
+    }
+
+    removeMatches(match) {
+        this.hideCards(() => {
+            this.cards = this.removeMatchedCardsFromList(match)
+        })
+    }
+
+    isMatch(cardsArr) {
+        return cardsArr.every((val, i, arr) => val === arr[0])
+    }
+
+    getRevealedCards() {
+        return this.cards.filter((_, i) => this.state.cardRevealStates[i]);
+    }
+
+    removeMatchedCardsFromList(match) {
+        return this.cards.filter(card => card !== match)
+    }
+
+    checkForMatch() {
+        const revealedCards = this.getRevealedCards()
+        if (revealedCards.length === 2) {
+            if (this.isMatch(revealedCards)) {
+                this.removeMatches(revealedCards[0])
+            }
+            this.hideCards()
+        }
     }
 
     handleClick(index){
@@ -41,7 +78,7 @@ class App extends Component {
 
     renderCards(){
         return this.cards.map((icon, index) => 
-            <Card key={index} clickCallback={this.handleClick} index={index} icon={icon} display={this.state.cardRevealStates[index]} />
+            <Card key={`${icon}-${index}`} clickCallback={this.handleClick} index={index} icon={icon} display={this.state.cardRevealStates[index]} />
         )
     }
 }
