@@ -20,6 +20,9 @@
 >    - `npm start`
 > 1. Open a browser and navigate to `localhost:3000` You should see a page that displays "Welcome to React!"
 
+**NOTE**
+For Ubuntu and other linux distros. credit to @fllprbt for bugfix.
+>   - `apt install libpng-dev`
 ### Bundle For Deployment
 
 > 1. Run webpack to bundle files
