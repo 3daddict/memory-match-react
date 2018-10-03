@@ -44,10 +44,10 @@ class App extends Component {
         return (
             <div className="App">
                 <div id="gameArea">
-                    {this.renderCards()}
+                    <div id="gameCards">{this.renderCards()}</div>
                     <button
                         className="randomize-btn"
-                        onClick={this.randomizeCards(this.cards)}
+                        onClick={() => this.randomizeCards(this.cards)}
                     >
                         Randomize
                     </button>
