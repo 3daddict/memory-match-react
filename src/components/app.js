@@ -1,12 +1,17 @@
 import React, {Component} from 'react';
 import '../assets/css/app.css';
 import Card from  './card';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart, faSpa, faAnchor, faCube, faDice, faBicycle, faLeaf  } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faHeart, faSpa, faAnchor, faCube, faDice, faBicycle, faLeaf);
 
 class App extends Component {
     constructor(props){
         super(props);
 
-        this.cards = ['red', 'blue', 'red']
+        this.cards = ['heart', 'anchor', 'cube','leaf','dice','bicycle','heart', 'anchor', 'cube','leaf','dice','bicycle'];
 
         this.state = {
             cardRevealStates: new Array(this.cards.length).fill(false)
@@ -37,8 +42,8 @@ class App extends Component {
     }
 
     renderCards(){
-        return this.cards.map((color, index) => 
-            <Card key={index} clickCallback={this.handleClick} index={index} color={color} display={this.state.cardRevealStates[index]} />
+        return this.cards.map((icon, index) => 
+            <Card key={index} clickCallback={this.handleClick} index={index} icon={icon} display={this.state.cardRevealStates[index]} />
         )
     }
 }
