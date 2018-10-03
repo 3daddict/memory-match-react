@@ -1,6 +1,6 @@
 # Memory Match Game React
 
-> Basic memeory match game using ReactJS
+> Basic memory match game using ReactJS
 
 ### Contribution rules
 * Project must work when opening npm start
