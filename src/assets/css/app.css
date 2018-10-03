@@ -6,8 +6,8 @@ body {
 #gameArea {
     width: 100vw;
     height: 100vh;
-
 }
+
 .card {
     position: relative;
     width: 200px;
@@ -15,4 +15,13 @@ body {
     float: left;
     border: 1px black solid;
     box-sizing: border-box;
+}
+
+.randomize-btn {
+    display: block;
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
+    text-align: center;
+    margin: 0 auto;
 }

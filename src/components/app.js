@@ -1,19 +1,40 @@
-import React, {Component} from 'react';
-import '../assets/css/app.css';
-import Card from  './card';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faHeart, faSpa, faAnchor, faCube, faDice, faBicycle, faLeaf  } from '@fortawesome/free-solid-svg-icons';
+import React, { Component } from "react";
+import "../assets/css/app.css";
+import Card from "./card";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+    faHeart,
+    faSpa,
+    faAnchor,
+    faCube,
+    faDice,
+    faBicycle,
+    faLeaf
+} from "@fortawesome/free-solid-svg-icons";
 library.add(faHeart, faSpa, faAnchor, faCube, faDice, faBicycle, faLeaf);
 
 class App extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
-        this.cards = ['heart', 'anchor', 'cube','leaf','dice','bicycle','heart', 'anchor', 'cube','leaf','dice','bicycle'];
+        this.cards = [
+            "heart",
+            "anchor",
+            "cube",
+            "leaf",
+            "dice",
+            "bicycle",
+            "heart",
+            "anchor",
+            "cube",
+            "leaf",
+            "dice",
+            "bicycle"
+        ];
 
         this.state = {
             cardRevealStates: new Array(this.cards.length).fill(false)
-        }
+        };
         console.log(this.state.cardRevealStates);
 
         this.handleClick = this.handleClick.bind(this);
@@ -24,6 +45,12 @@ class App extends Component {
             <div className="App">
                 <div id="gameArea">
                     {this.renderCards()}
+                    <button
+                        className="randomize-btn"
+                        onClick={this.randomizeCards(this.cards)}
+                    >
+                        Randomize
+                    </button>
                 </div>
             </div>
         );
@@ -31,20 +58,23 @@ class App extends Component {
 
     hideCards(onSetState = () => {}) {
         setTimeout(() => {
-            this.setState({
-                cardRevealStates: new Array(this.cards.length).fill(false)
-            }, onSetState())
-        }, 500)
+            this.setState(
+                {
+                    cardRevealStates: new Array(this.cards.length).fill(false)
+                },
+                onSetState()
+            );
+        }, 500);
     }
 
     removeMatches(match) {
         this.hideCards(() => {
-            this.cards = this.removeMatchedCardsFromList(match)
-        })
+            this.cards = this.removeMatchedCardsFromList(match);
+        });
     }
 
     isMatch(cardsArr) {
-        return cardsArr.every((val, i, arr) => val === arr[0])
+        return cardsArr.every((val, i, arr) => val === arr[0]);
     }
 
     getRevealedCards() {
@@ -52,34 +82,57 @@ class App extends Component {
     }
 
     removeMatchedCardsFromList(match) {
-        return this.cards.filter(card => card !== match)
+        return this.cards.filter(card => card !== match);
     }
 
     checkForMatch() {
-        const revealedCards = this.getRevealedCards()
+        const revealedCards = this.getRevealedCards();
         if (revealedCards.length === 2) {
             if (this.isMatch(revealedCards)) {
-                this.removeMatches(revealedCards[0])
+                this.removeMatches(revealedCards[0]);
             }
-            this.hideCards()
+            this.hideCards();
         }
     }
 
-    handleClick(index){
+    handleClick(index) {
         const newRevealStates = this.state.cardRevealStates;
         newRevealStates[index] = true;
 
         this.setState({
             cardRevealStates: newRevealStates
-        })
+        });
 
-        console.log('Clicked')
+        console.log("Clicked");
     }
 
-    renderCards(){
-        return this.cards.map((icon, index) => 
-            <Card key={`${icon}-${index}`} clickCallback={this.handleClick} index={index} icon={icon} display={this.state.cardRevealStates[index]} />
-        )
+    randomizeCards(cards) {
+        var currentIndex = cards.length,
+            temporaryValue,
+            randomIndex;
+
+        while (0 !== currentIndex) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            temporaryValue = cards[currentIndex];
+            cards[currentIndex] = cards[randomIndex];
+            cards[randomIndex] = temporaryValue;
+        }
+
+        this.renderCards(cards);
+    }
+
+    renderCards() {
+        return this.cards.map((icon, index) => (
+            <Card
+                key={`${icon}-${index}`}
+                clickCallback={this.handleClick}
+                index={index}
+                icon={icon}
+                display={this.state.cardRevealStates[index]}
+            />
+        ));
     }
 }
 
