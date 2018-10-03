@@ -5,8 +5,6 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faHeart, faSpa, faAnchor, faCube, faDice, faBicycle, faLeaf  } from '@fortawesome/free-solid-svg-icons';
 library.add(faHeart, faSpa, faAnchor, faCube, faDice, faBicycle, faLeaf);
 
-
-
 class App extends Component {
     constructor(props){
         super(props);
