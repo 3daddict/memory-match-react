@@ -20,6 +20,7 @@ function Card(props){
                     display: props.display ? 'none' : 'block'
                     }} ><FontAwesomeIcon icon="spa" size="5x" style={{position: 'absolute',left:'30%',top:'20%'}}/></div>
             </div>
+            </div>
 }
 
 export default Card;

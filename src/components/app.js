@@ -2,17 +2,10 @@ import React, {Component} from 'react';
 import '../assets/css/app.css';
 import Card from  './card';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faSpa, faAnchor, faCube, faDice, faBicycle, faLeaf  } from '@fortawesome/free-solid-svg-icons';
-
 library.add(faHeart, faSpa, faAnchor, faCube, faDice, faBicycle, faLeaf);
 
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faSpa } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faHeart);
-library.add(faSpa);
 
 class App extends Component {
     constructor(props){
