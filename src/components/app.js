@@ -10,6 +10,7 @@ class App extends Component {
         super(props);
 
         this.cards = ['heart', 'anchor', 'cube','leaf','dice','bicycle','heart', 'anchor', 'cube','leaf','dice','bicycle'];
+        this.currentSelections = [];
 
         this.state = {
             cardRevealStates: new Array(this.cards.length).fill(false)
@@ -28,6 +29,39 @@ class App extends Component {
         );
     }
 
+    checkMatch(index) {
+        // currentSelections maintains information about the last two card clicks
+        let currentSelections = this.currentSelections;
+        const { cardRevealStates } = this.state;
+        
+        currentSelections.push({card:this.cards[index], index});
+
+        if(currentSelections.length === 2) {
+            // Adding a delay of 500ms for the user to see the flip side of both the selections
+            setTimeout(() => {
+                if(currentSelections[0].card === currentSelections[1].card) {
+                    // Splicing the cards in reverse order so that there is no index mismatch
+                    if(currentSelections[0].index > currentSelections[1].index) {
+                        this.cards.splice(currentSelections[0].index,1);
+                        this.cards.splice(currentSelections[1].index,1);
+                    } else {
+                        this.cards.splice(currentSelections[1].index,1);
+                        this.cards.splice(currentSelections[0].index,1);
+                    } 
+                }
+
+                cardRevealStates[currentSelections[0].index] = false;
+                cardRevealStates[currentSelections[1].index] = false;
+
+                this.currentSelections = [];
+
+                this.setState({
+                    cardRevealStates
+                });
+            },500);
+        }
+    }
+
     handleClick(index){
         const newRevealStates = this.state.cardRevealStates;
         newRevealStates[index] = true;
@@ -36,7 +70,8 @@ class App extends Component {
             cardRevealStates: newRevealStates
         })
 
-        console.log('Clicked')
+        this.checkMatch(index);
+        console.log('Clicked');
     }
 
     renderCards(){
