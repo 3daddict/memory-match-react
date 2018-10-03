@@ -8,9 +8,8 @@ function Card(props){
 
     return <div className="card" onClick={cardHandleClick.bind(this)}>
                 <div className="front" style={{
-                    backgroundColor: props.color,
                     width: '100%',
-                    height: '100%'}} />
+                    height: '100%'}} ><FontAwesomeIcon icon={props.icon} size="5x" style={{position: 'absolute',left:'30%',top:'20%'}}/>
                 <div className="back" style={{
                     backgroundColor: 'lavender',
                     width: '100%',
