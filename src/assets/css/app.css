@@ -1,6 +1,8 @@
-body {
-    margin: 0;
-    padding: 0;
+#gameArea {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1rem;
+  justify-content: center;
 }
 
 #gameArea {
@@ -25,3 +27,39 @@ body {
     text-align: center;
     margin: 0 auto;
 }
+
+.card {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border: 1px black solid;
+  justify-self: center;
+  transition: all 0.3s ease-in;
+}
+
+.card:hover {
+  cursor: pointer;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  transition: all 0.3s ease-in;
+}
+
+@media (max-width: 850px) {
+  #gameArea {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  #gameArea {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 420px) {
+  #gameArea {
+    grid-template-columns: 1fr;
+  }
+}
+
