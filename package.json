@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dev_server.js",
     "bundle": "webpack --config webpack.prod.js --progress",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Michael Salvati",
   "contributors": [
@@ -41,6 +41,7 @@
     "eslint": "^4.19.1",
     "file-loader": "^1.1.11",
     "image-webpack-loader": "^4.3.0",
+    "jest": "^23.6.0",
     "postcss-loader": "^2.1.5",
     "react-hot-loader": "^4.3.0",
     "style-loader": "^0.21.0",
