@@ -1,26 +1,28 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function Card(props){
-    function cardHandleClick(){
-        props.clickCallback(props.index);
+import "../assets/css/card.css";
+
+const Card = ({
+    clickCallback,
+    display,
+    icon,
+    index
+}) => {
+    const cardHandleClick = () => {
+        clickCallback(index);
     }
 
-    return <div className="card" onClick={cardHandleClick.bind(this)}>
-                <div className="front" style={{
-                    width: '100%',
-                    height: '100%'}} ><FontAwesomeIcon icon={props.icon} size="5x" style={{position: 'absolute',left:'30%',top:'20%'}}/>
-                <div className="back" style={{
-                    backgroundColor: 'lavender',
-                    width: '100%',
-                    height: '100%',
-                    position: 'absolute',
-                    left: '0',
-                    top: '0',
-                    display: props.display ? 'none' : 'block'
-                    }} ><FontAwesomeIcon icon="spa" size="5x" style={{position: 'absolute',left:'30%',top:'20%'}}/></div>
+    return (
+        <div className="card" onClick={cardHandleClick}>
+            <div className="front">
+                <FontAwesomeIcon className="front-icon" icon={icon} size="5x" />
+                <div className="back-icon" style={{display: display ? 'none' : 'block'}}>
+                    <FontAwesomeIcon className="front-icon-spa" icon="spa" size="5x" />
+                </div>
             </div>
-            </div>
+        </div>
+    );
 }
 
 export default Card;
