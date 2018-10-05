@@ -6,12 +6,15 @@
   "scripts": {
     "start": "node dev_server.js",
     "bundle": "webpack --config webpack.prod.js --progress",
-    "test": "jest"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src/**/*.js src/**/*.jsx"
   },
   "author": "Michael Salvati",
   "contributors": [
     "Michael Salvati <info@msalvati.com> (https://github.com/3daddict)",
-    "Mateo Guzmán <mateo.guzmanalvarez@gmail.com> (https://github.com/mateoguzmana/)"
+    "Mateo Guzmán <mateo.guzmanalvarez@gmail.com> (https://github.com/mateoguzmana/)",
+    "Robin Hurtado <robin_aven94@hotmail.com> (https://github.com/robinHurtado/)"
+    "David Aguilar <davidaguilarh.94@gmail.com> (https://github.com/daguilar94)"
   ],
   "license": "ISC",
   "repository": {
@@ -39,6 +42,7 @@
     "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.28.11",
     "eslint": "^4.19.1",
+    "eslint-plugin-react": "^7.11.1",
     "file-loader": "^1.1.11",
     "image-webpack-loader": "^4.3.0",
     "jest": "^23.6.0",
