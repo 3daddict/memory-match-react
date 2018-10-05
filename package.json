@@ -1,14 +1,18 @@
 {
-  "name": "react_starter",
+  "name": "memory-match-react",
   "version": "1.0.0",
-  "description": "Starting setup for react redux project",
+  "description": "Basic memory match game using ReactJS",
   "main": "index.js",
   "scripts": {
     "start": "node dev_server.js",
     "bundle": "webpack --config webpack.prod.js --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Hacktoberfest",
+  "author": "Michael Salvati",
+  "contributors": [
+    "Michael Salvati <info@msalvati.com> (https://github.com/3daddict)",
+    "Mateo Guzmán <mateo.guzmanalvarez@gmail.com> (https://github.com/mateoguzmana/)"
+  ],
   "license": "ISC",
   "repository": {
     "type": "git",
