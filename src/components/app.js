@@ -33,7 +33,8 @@ class App extends Component {
         ];
 
         this.state = {
-            cardRevealStates: new Array(this.cards.length).fill(false)
+            cardRevealStates: new Array(this.cards.length).fill(false),
+            numberOfAttempts: 0
         };
         console.log(this.state.cardRevealStates);
 
@@ -43,8 +44,9 @@ class App extends Component {
         this.checkForMatch();
         return (
             <div className="App">
+            <h1 id="numberOfAttempts">{this.state.numberOfAttempts}</h1>
                 <div id="gameArea">
-                    <div id="gameCards">{this.renderCards()}</div>
+                    {this.renderCards()}
                     <button
                         className="randomize-btn"
                         onClick={() => this.randomizeCards(this.cards)}
@@ -104,6 +106,11 @@ class App extends Component {
         });
 
         console.log("Clicked");
+        this.addNumberOfAttempts();
+    }
+
+    addNumberOfAttempts() {
+        this.setState(prevState=>({numberOfAttempts:prevState.numberOfAttempts+1}));
     }
 
     randomizeCards(cards) {
