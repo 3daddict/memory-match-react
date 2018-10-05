@@ -40,6 +40,15 @@
     margin: 0 auto;
 }
 
+.startGame-btn {
+    display: block;
+    width: 150px;
+    height: 40px;
+    font-size: 16px;
+    text-align: center;
+    margin: 0 auto;
+}
+
 .card {
   position: relative;
   width: 200px;

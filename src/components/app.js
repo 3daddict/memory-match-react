@@ -17,7 +17,7 @@ class App extends Component {
     constructor(props) {
         super(props);
 
-        this.cards = [
+        this.cardsToPopulate = [
             "heart",
             "anchor",
             "cube",
@@ -31,6 +31,7 @@ class App extends Component {
             "dice",
             "bicycle"
         ];
+        this.cards = [...this.cardsToPopulate];
 
         this.state = {
             cardRevealStates: new Array(this.cards.length).fill(false),
@@ -40,6 +41,7 @@ class App extends Component {
         console.log(this.state.cardRevealStates);
 
         this.handleClick = this.handleClick.bind(this);
+        this.startNewGame = this.startNewGame.bind(this);
     }
     render() {
         const {numberOfAttempts, gamesPlayed} = this.state;
@@ -57,6 +59,12 @@ class App extends Component {
                         onClick={() => this.randomizeCards(this.cards)}
                     >
                         Randomize
+                    </button>
+                    <button
+                        className="startGame-btn"
+                        onClick={this.startNewGame}
+                    >
+                        Start New Game
                     </button>
                 </div>
             </div>
@@ -145,6 +153,16 @@ class App extends Component {
                 display={this.state.cardRevealStates[index]}
             />
         ));
+    }
+
+    startNewGame() {
+        const {gamesPlayed} = this.state;
+        this.cards = [...this.cardsToPopulate];
+        this.setState({
+            cardRevealStates: new Array(this.cards.length).fill(false),
+            gamesPlayed: gamesPlayed + 1,
+            numberOfAttempts: 0
+        });
     }
 }
 
