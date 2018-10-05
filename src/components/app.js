@@ -34,17 +34,22 @@ class App extends Component {
 
         this.state = {
             cardRevealStates: new Array(this.cards.length).fill(false),
-            numberOfAttempts: 0
+            numberOfAttempts: 0,
+            gamesPlayed: 1
         };
         console.log(this.state.cardRevealStates);
 
         this.handleClick = this.handleClick.bind(this);
     }
     render() {
+        const {numberOfAttempts, gamesPlayed} = this.state;
         this.checkForMatch();
         return (
             <div className="App">
-            <h1 id="numberOfAttempts">{this.state.numberOfAttempts}</h1>
+                <p id="gameStats">
+                    <span className="stat">Games Played: {gamesPlayed}</span>
+                    <span className="stat">Attempts: {numberOfAttempts}</span>
+                </p>
                 <div id="gameArea">
                     {this.renderCards()}
                     <button

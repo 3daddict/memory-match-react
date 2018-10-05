@@ -1,14 +1,20 @@
-#numberOfAttempts {
-  font-size: 4em;
-  text-align: center;
-  margin: 0;
-}
-
 #gameArea {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 1rem;
   justify-content: center;
+}
+
+#gameStats {
+    display: flex;
+    align-content: center;
+    justify-content: space-evenly;
+}
+
+#gameStats .stat {
+    font-size: 2em;
+    text-align: center;
+    margin: 0;
 }
 
 #gameArea {
