@@ -1,28 +1,17 @@
-# Memory Match Game React
+# Contribution Guide
 
-> Basic memory match game using ReactJS
+Wanting to contribute? Please check the steps below.
 
-### Contribution rules
-* Project must work when opening npm start
-* Starting with base code, please add style and functionality
-* Add your name to the contributers.js file (needs to be created)
+1. Project must work when opening `npm start`
+
+2. Check your code format before make any pull request with `npm run lint`
+
+3. Starting with base code, please add style and functionality.
+
+4. Add your name to the package.json file in the section contributors.
 
 ### Setup Instructions
 
-> 1. Fork this repo
-> 1. Clone your forked copy of this repo
->    - `git clone https://github.com/[Your Username]/react_starter.git`
-> 1. Change directory into the newly cloned repo
->    - `cd memory-match-react`
-> 1. Install dependencies 
->    - `npm install`
-> 1. Start dev server
->    - `npm start`
-> 1. Open a browser and navigate to `localhost:3000` You should see a page that displays "Welcome to React!"
+Follow the [instructions](https://github.com/3daddict/memory-match-react/blob/master/README.md) here.
 
-### Bundle For Deployment
-
-> 1. Run webpack to bundle files
->    - `npm run bundle`
-> 
-> **NOTE:** *After bundling you can not directly run your app locally. You must run your app from the root directory of a server.*
+Happy coding!
