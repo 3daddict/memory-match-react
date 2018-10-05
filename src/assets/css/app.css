@@ -1,3 +1,9 @@
+#numberOfAttempts {
+  font-size: 4em;
+  text-align: center;
+  margin: 0;
+}
+
 #gameArea {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
