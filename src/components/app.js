@@ -50,18 +50,28 @@ class App extends Component {
         const { numberOfAttempts, gamesPlayed, accuracy } = this.state;
         return (
             <div className="App">
+
                 <p id="gameStats">
                     <span className="stat">Games Played: {gamesPlayed}</span>
                     <span className="stat">Attempts: {numberOfAttempts}</span>
                     <span className="stat">Accuracy: {accuracy}%</span>
                 </p>
+
+                <h1 id="numberOfAttempts">
+                    {this.state.numberOfAttempts} - Attempts
+                </h1>
+                <div className="gamecomplete">
+                    <p id="gc"></p>
+                </div>
+
                 <div id="gameArea">
                     {this.renderCards()}
+                </div>
+                <div id="buttondiv">
                     <button
-                        className="randomize-btn"
-                        onClick={() => this.randomizeCards(this.cards)}
-                    >
-                        Randomize
+                            className="randomize-btn"
+                            onClick={() => this.randomizeCards(this.cards)}>
+                            Randomize
                     </button>
                     <button
                         className="startGame-btn"
@@ -71,6 +81,7 @@ class App extends Component {
                     </button>
                 </div>
             </div>
+                
         );
     }
 
@@ -84,7 +95,6 @@ class App extends Component {
             );
         }, 500);
     }
-
     removeMatches(match) {
         this.hideCards(() => {
             this.cards = this.removeMatchedCardsFromList(match);
@@ -93,14 +103,21 @@ class App extends Component {
 
     isMatch(cardsArr) {
         return cardsArr.every((val, i, arr) => val === arr[0]);
+        
     }
 
     getRevealedCards() {
         return this.cards.filter((_, i) => this.state.cardRevealStates[i]);
+        
     }
 
     removeMatchedCardsFromList(match) {
         return this.cards.filter(card => card !== match);
+        
+    }
+
+    addNumberOfAttempts() {
+        this.setState(prevState=>({numberOfAttempts:prevState.numberOfAttempts+1}));
     }
 
     checkForMatch() {
@@ -112,6 +129,12 @@ class App extends Component {
             this.hideCards(() => {
                 this.updateAccuracy();
             });
+        }
+        if(this.cards.length==0){
+            document.getElementById("gc").innerHTML="Game Complete in " + this.state.numberOfAttempts + "   Attempts";    
+            document.getElementById("numberOfAttempts").style.display="none";
+            document.getElementById("buttondiv").style.display="none";
+            console.log("Game Complete in" + this.state.numberOfAttempts + "attempts");
         }
     }
 
@@ -127,6 +150,7 @@ class App extends Component {
         this.checkForMatch();
         this.addNumberOfClicks()
     }
+
 
     addNumberOfClicks() {
         const { numberOfClicks } = this.state;

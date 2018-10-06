@@ -1,6 +1,16 @@
+.App{
+  text-align:center;
+}
+
+#numberOfAttempts {
+  font-size: 2em;
+  text-align: right;
+  margin: 0;
+}
+
 #gameArea {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   grid-gap: 1rem;
   justify-content: center;
 }
@@ -18,7 +28,7 @@
 }
 
 #gameArea {
-    width: 100vw;
+    width: 100%;
     height: 100vh;
 }
 
@@ -31,13 +41,68 @@
     box-sizing: border-box;
 }
 
+.gamecomplete{
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+
+#buttondiv{
+  text-align: center;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  position: relative;
+}
 .randomize-btn {
     display: block;
     width: 100px;
     height: 40px;
     font-size: 16px;
-    text-align: center;
-    margin: 0 auto;
+    margin: auto;
+    padding: auto;
+}
+/* 
+.draw-border {
+  box-shadow: inset 0 0 0 4px #58afd1;
+  color: cyan;
+  transition: color 0.25s 0.0833333333s;
+  position: relative;
+}
+.draw-border::before, .draw-border::after {
+  border: 0 solid transparent;
+  box-sizing: border-box;
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  width: 0;
+  height: 0;
+  bottom: 0;
+  right: 0;
+}
+.draw-border::before {
+  border-bottom-width: 4px;
+  border-left-width: 4px;
+}
+.draw-border::after {
+  border-top-width: 4px;
+  border-right-width: 4px;
+}
+.draw-border:hover {
+  color: #FF9A56;
+}
+.draw-border:hover::before, .draw-border:hover::after {
+  border-color: #FF9A56;
+  transition: border-color 0s, width 0.25s, height 0.25s;
+  width: 100%;
+  height: 100%;
+}
+.draw-border:hover::before {
+  transition-delay: 0s, 0s, 0.25s;
+}
+.draw-border:hover::after {
+  transition-delay: 0s, 0.25s, 0s;
 }
 
 .startGame-btn {
@@ -49,20 +114,23 @@
     margin: 0 auto;
 }
 
-.card {
+ */
+ .card {
   position: relative;
   width: 200px;
   height: 200px;
+  border-radius:50%;
   border: 1px black solid;
   justify-self: center;
   transition: all 0.3s ease-in;
+
 }
 
 .card:hover {
   cursor: pointer;
-  -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 10px 5px 0px rgba(0, 0, 0, 0.75);
   transition: all 0.3s ease-in;
 }
 
@@ -70,6 +138,7 @@
   #gameArea {
     grid-template-columns: repeat(3, 1fr);
   }
+  
 }
 
 @media (max-width: 650px) {
