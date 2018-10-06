@@ -36,6 +36,7 @@ class App extends Component {
         this.state = {
             cardRevealStates: new Array(this.cards.length).fill(false),
             numberOfAttempts: 0,
+            numberOfClicks: 0,
             gamesPlayed: 1
         };
         console.log(this.state.cardRevealStates);
@@ -119,11 +120,18 @@ class App extends Component {
         });
 
         console.log("Clicked");
-        this.addNumberOfAttempts();
+        this.addNumberOfClicks();
     }
 
-    addNumberOfAttempts() {
-        this.setState(prevState=>({numberOfAttempts:prevState.numberOfAttempts+1}));
+    addNumberOfClicks() {
+        const {numberOfClicks} = this.state;
+        const clicks = numberOfClicks + 1;
+        const attempts = Math.floor(clicks / 2);
+
+        this.setState({
+          numberOfClicks: clicks,
+          numberOfAttempts: attempts
+        });
     }
 
     randomizeCards(cards) {
