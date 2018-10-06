@@ -17,7 +17,7 @@ class App extends Component {
     constructor(props) {
         super(props);
 
-        this.cards = [
+        this.cardsToPopulate = [
             "heart",
             "anchor",
             "cube",
@@ -31,25 +31,39 @@ class App extends Component {
             "dice",
             "bicycle"
         ];
+        this.cards = [...this.cardsToPopulate];
 
         this.state = {
             cardRevealStates: new Array(this.cards.length).fill(false),
-            numberOfAttempts: 0
+            numberOfAttempts: 0,
+            numberOfClicks: 0,
+            gamesPlayed: 1,
+            accuracy: 0
         };
         console.log(this.state.cardRevealStates);
 
         this.handleClick = this.handleClick.bind(this);
+        this.startNewGame = this.startNewGame.bind(this);
+        this.addNumberOfClicks = this.addNumberOfClicks.bind(this);
     }
     render() {
-        this.checkForMatch();
+        const { numberOfAttempts, gamesPlayed, accuracy } = this.state;
         return (
             <div className="App">
+
+                <p id="gameStats">
+                    <span className="stat">Games Played: {gamesPlayed}</span>
+                    <span className="stat">Attempts: {numberOfAttempts}</span>
+                    <span className="stat">Accuracy: {accuracy}%</span>
+                </p>
+
                 <h1 id="numberOfAttempts">
                     {this.state.numberOfAttempts} - Attempts
                 </h1>
                 <div className="gamecomplete">
                     <p id="gc"></p>
                 </div>
+
                 <div id="gameArea">
                     {this.renderCards()}
                 </div>
@@ -58,6 +72,12 @@ class App extends Component {
                             className="randomize-btn"
                             onClick={() => this.randomizeCards(this.cards)}>
                             Randomize
+                    </button>
+                    <button
+                        className="startGame-btn"
+                        onClick={this.startNewGame}
+                    >
+                        Start New Game
                     </button>
                 </div>
             </div>
@@ -106,7 +126,9 @@ class App extends Component {
             if (this.isMatch(revealedCards)) {
                 this.removeMatches(revealedCards[0]);
             }
-            this.hideCards();
+            this.hideCards(() => {
+                this.updateAccuracy();
+            });
         }
         if(this.cards.length==0){
             document.getElementById("gc").innerHTML="Game Complete in " + this.state.numberOfAttempts + "   Attempts";    
@@ -125,11 +147,36 @@ class App extends Component {
         });
 
         console.log("Clicked");
-        this.addNumberOfAttempts();
+        this.checkForMatch();
+        this.addNumberOfClicks()
     }
 
 
-   
+    addNumberOfClicks() {
+        const { numberOfClicks } = this.state;
+        const clicks = numberOfClicks + 1;
+        const attempts = Math.floor(clicks / 2);
+
+        this.setState({
+          numberOfClicks: clicks,
+          numberOfAttempts: attempts
+        });
+    }
+
+    updateAccuracy() {
+      const { numberOfClicks } = this.state;
+      const clicks = numberOfClicks + 1;
+      const attempts = Math.floor(clicks / 2);
+      const originalCardsLength = this.cardsToPopulate.length;
+      const currentCardsLength = this.cards.length;
+      const revealedCards = Math.ceil((originalCardsLength - currentCardsLength) / 2);
+      const accuracy = Math.floor(revealedCards ? revealedCards / attempts * 100 : 0);
+
+      this.setState({
+        accuracy: accuracy
+      });
+    }
+
     randomizeCards(cards) {
         var currentIndex = cards.length,
             temporaryValue,
@@ -157,6 +204,17 @@ class App extends Component {
                 display={this.state.cardRevealStates[index]}
             />
         ));
+    }
+
+    startNewGame() {
+        const {gamesPlayed} = this.state;
+        this.cards = [...this.cardsToPopulate];
+        this.setState({
+            cardRevealStates: new Array(this.cards.length).fill(false),
+            gamesPlayed: gamesPlayed + 1,
+            numberOfAttempts: 0,
+            accuracy: 0
+        });
     }
 }
 
