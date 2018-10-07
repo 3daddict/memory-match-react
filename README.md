@@ -13,7 +13,7 @@ See our [Contributing Guide](CONTRIBUTING.md)!
 
 2. Clone your forked copy of this repo
 
-   > git clone `https://github.com/[Your Username]/react_starter.git`
+   > git clone `https://github.com/[Your Username]/memory-match-react.git`
 
 3. Change directory into the newly cloned repo
 
