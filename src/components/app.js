@@ -51,11 +51,11 @@ class App extends Component {
         return (
             <div className="App">
 
-                <p id="gameStats">
-                    <span className="stat">Games Played: {gamesPlayed}</span>
-                    <span className="stat">Attempts: {numberOfAttempts}</span>
-                    <span className="stat">Accuracy: {accuracy}%</span>
-                </p>
+                <div id="gameStats">
+                    <p className="stat color-salmon"><span>Games Played</span><span className="font-bold"> {gamesPlayed}</span></p>
+                    <p className="stat color-green"><span>Attempts</span><span className="font-bold"> {numberOfAttempts}</span></p>
+                    <p className="stat color-sky"><span>Accuracy</span><span className="font-bold"> {accuracy}%</span></p>
+                </div>
 
                 <h1 id="numberOfAttempts">
                     {this.state.numberOfAttempts} - Attempts
