@@ -1,3 +1,55 @@
+@font-face {
+  font-family: 'k2dbold';
+  src: url('../fonts/k2d-bold-webfont.woff2') format('woff2'),
+       url('../fonts/k2d-bold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'k2d_mediumregular';
+  src: url('../fonts/k2d-medium-webfont.woff2') format('woff2'),
+       url('../fonts/k2d-medium-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'k2dregular';
+  src: url('../fonts/k2d-regular-webfont.woff2') format('woff2'),
+       url('../fonts/k2d-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+*,
+body {
+  margin:  0;
+  padding: 0;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: 'k2dregular', sans-serif; 
+  background: #f5f5f5;
+}
+
+.font-bold {
+  font-family: 'k2dbold', sans-serif;
+}
+
+.color-salmon {
+  color: #fa8366;
+}
+
+.color-green {
+  color: #b7d84b;
+}
+
+.color-sky {
+  color: #4ab3f4;
+}
+
 .App{
   text-align:center;
 }
@@ -6,6 +58,7 @@
   font-size: 2em;
   text-align: right;
   margin: 0;
+  padding: 0 10px;
 }
 
 #gameArea {
@@ -25,6 +78,11 @@
     font-size: 2em;
     text-align: center;
     margin: 0;
+    padding: 10px 0;
+}
+
+#gameStats .stat span {
+  display: block;
 }
 
 #gameArea {
@@ -48,20 +106,34 @@
 }
 
 
-#buttondiv{
+#buttondiv {
   text-align: center;
   justify-content: center;
   align-content: center;
   align-items: center;
   position: relative;
+  padding: 10px 0;
 }
-.randomize-btn {
-    display: block;
-    width: 100px;
-    height: 40px;
-    font-size: 16px;
-    margin: auto;
-    padding: auto;
+
+.randomize-btn:hover,
+.startGame-btn:hover {
+  box-shadow: 0px 0px 0px 5px #A66615;
+}
+
+.randomize-btn,
+.startGame-btn {
+  display: block;
+  width: 100px;
+  height: 40px;
+  font-size: 16px;
+  margin: 8px auto;
+  padding: auto;
+  box-shadow: 0px 0px 0px 0px #A66615;
+  color: #FFF;
+  border-radius: 5px;
+  transition: all 0.2s ;
+  background: #FFAA40;
+  border: none;
 }
 /* 
 .draw-border {
@@ -139,6 +211,12 @@
     grid-template-columns: repeat(3, 1fr);
   }
   
+  #gameStats .stat {
+    font-size: 1.2em;
+    text-align: center;
+    margin: 0;
+    padding: 10px 0;
+  }
 }
 
 @media (max-width: 650px) {
