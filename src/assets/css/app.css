@@ -26,10 +26,63 @@
   flex-direction: column;
 }
 
+@font-face {
+  font-family: 'k2dbold';
+  src: url('../fonts/k2d-bold-webfont.woff2') format('woff2'),
+       url('../fonts/k2d-bold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'k2d_mediumregular';
+  src: url('../fonts/k2d-medium-webfont.woff2') format('woff2'),
+       url('../fonts/k2d-medium-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'k2dregular';
+  src: url('../fonts/k2d-regular-webfont.woff2') format('woff2'),
+       url('../fonts/k2d-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+*,
+body {
+  margin:  0;
+  padding: 0;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: 'k2dregular', sans-serif; 
+  background: #f5f5f5;
+}
+
+.font-bold {
+  font-family: 'k2dbold', sans-serif;
+}
+
+.color-salmon {
+  color: #fa8366;
+}
+
+.color-green {
+  color: #b7d84b;
+}
+
+.color-sky {
+  color: #4ab3f4;
+}
+
 #numberOfAttempts {
   font-size: 2em;
   text-align: right;
   margin: 0;
+  padding: 0 10px;
 }
 
 #gameArea {
