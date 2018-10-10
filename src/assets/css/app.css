@@ -105,7 +105,7 @@ body {
 
 #gameArea {
   width: 100%;
-  height: 100vh;
+  height: 70vh;
 }
 
 .card {
@@ -129,14 +129,45 @@ body {
   justify-content: space-around;
 }
 
+#HighScoreList {
+  padding: 15px;
+}
+#HighScoreList ul {
+  padding-top: 20px;
+}
+
 .randomize-btn,
 .startGame-btn {
   display: block;
-  width: 100px;
   height: 40px;
   font-size: 16px;
   margin: auto;
   padding: auto;
+}
+
+button {
+  cursor: pointer;
+  color: #FFF;
+  background: #8bbc37;
+  -webkit-box-shadow: 0 3px 1px #64950d;
+     -moz-box-shadow: 0 3px 1px #64950d;
+          box-shadow: 0 3px 1px #64950d;
+
+  border: 0;
+  padding: 10px;
+  margin: 20px auto;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px; 
+  display: block;
+  text-decoration: none;
+  text-align: center;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+  font-size: 1.2em;
+}
+button:disabled {
+  opacity: .5;
+  cursor: auto;
 }
 
 /* 
