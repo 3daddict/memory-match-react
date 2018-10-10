@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../assets/css/app.css";
 import Card from "./card";
+import HighScoreList from "./HighScoreList"
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faHeart,
@@ -38,14 +39,26 @@ class App extends Component {
       numberOfAttempts: 0,
       numberOfClicks: 0,
       gamesPlayed: 1,
-      accuracy: 0
+      accuracy: 0,
+      highScores: []
     };
     // console.log(this.state.cardRevealStates);
 
     this.handleClick = this.handleClick.bind(this);
     this.startNewGame = this.startNewGame.bind(this);
     this.addNumberOfClicks = this.addNumberOfClicks.bind(this);
+    this._addHighScore = this._addHighScore.bind(this);
   }
+
+
+  _addHighScore() {
+    this.setState({
+      highScores: [...this.state.highScores, this.state.numberOfAttempts].sort()
+    })
+    this.startNewGame()
+  }
+
+  _render
   render() {
     const { numberOfAttempts, gamesPlayed, accuracy } = this.state;
     return (
@@ -66,6 +79,7 @@ class App extends Component {
           <h1 id="numberOfAttempts">
             {this.state.numberOfAttempts} - Attempts
           </h1>
+          
           <div className="gamecomplete">
             <p id="gc" />
           </div>
@@ -81,11 +95,16 @@ class App extends Component {
             <button className="startGame-btn" onClick={this.startNewGame}>
               Start New Game
             </button>
+            <button className="startGame-btn" onClick={this._addHighScore} disabled={this.state.cardRevealStates.length}>
+              Add High Score
+            </button>
           </div>
         </div>
+        <HighScoreList className="col-3" scores={this.state.highScores} />
       </div>
     );
   }
+
 
   hideCards(onSetState = () => {}) {
     setTimeout(() => {
@@ -159,7 +178,6 @@ class App extends Component {
     const { numberOfClicks } = this.state;
     const clicks = numberOfClicks + 1;
     const attempts = Math.floor(clicks / 2);
-
     this.setState({
       numberOfClicks: clicks,
       numberOfAttempts: attempts
@@ -219,8 +237,9 @@ class App extends Component {
     this.setState({
       cardRevealStates: new Array(this.cards.length).fill(false),
       gamesPlayed: gamesPlayed + 1,
+      accuracy: 0,
       numberOfAttempts: 0,
-      accuracy: 0
+      numberOfClicks: 0
     });
   }
 }
