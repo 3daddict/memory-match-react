@@ -42,7 +42,6 @@ class App extends Component {
       accuracy: 0,
       highScores: []
     };
-    // console.log(this.state.cardRevealStates);
 
     this.handleClick = this.handleClick.bind(this);
     this.startNewGame = this.startNewGame.bind(this);
@@ -58,9 +57,8 @@ class App extends Component {
     this.startNewGame()
   }
 
-  _render
   render() {
-    const { numberOfAttempts, gamesPlayed, accuracy } = this.state;
+    const { numberOfAttempts, gamesPlayed, accuracy, cardRevealStates, highScores } = this.state;
     return (
       <div className="App">
         <div className="col-1">
@@ -84,19 +82,19 @@ class App extends Component {
           <div id="buttondiv">
             <button
               className="randomize-btn"
-              onClick={() => this.randomizeCards(this.cards)}
+              onClick={this.randomizeCards}
             >
               Randomize
             </button>
             <button className="startGame-btn" onClick={this.startNewGame}>
               Start New Game
             </button>
-            <button className="startGame-btn" onClick={this._addHighScore} disabled={this.state.cardRevealStates.length}>
+            <button className="startGame-btn" onClick={this._addHighScore} disabled={cardRevealStates.length}>
               Add High Score
             </button>
           </div>
         </div>
-        <HighScoreList className="col-3" scores={this.state.highScores} />
+        <HighScoreList className="col-3" scores={highScores} />
       </div>
     );
   }
@@ -150,9 +148,6 @@ class App extends Component {
       document.getElementById("gc").innerHTML =
         "Game Complete in " + this.state.numberOfAttempts + "   Attempts";
       document.getElementById("buttondiv").style.display = "none";
-      //   console.log(
-      //     "Game Complete in" + this.state.numberOfAttempts + "attempts"
-      //   );
     }
   }
 
@@ -164,7 +159,6 @@ class App extends Component {
       cardRevealStates: newRevealStates
     });
 
-    // console.log("Clicked");
     this.checkForMatch();
     this.addNumberOfClicks();
   }
@@ -197,8 +191,8 @@ class App extends Component {
     });
   }
 
-  randomizeCards(cards) {
-    var currentIndex = cards.length,
+  randomizeCards() {
+    var currentIndex = this.cards.length,
       temporaryValue,
       randomIndex;
 
@@ -206,12 +200,12 @@ class App extends Component {
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
 
-      temporaryValue = cards[currentIndex];
-      cards[currentIndex] = cards[randomIndex];
-      cards[randomIndex] = temporaryValue;
+      temporaryValue = this.cards[currentIndex];
+      this.cards[currentIndex] = this.cards[randomIndex];
+      this.cards[randomIndex] = temporaryValue;
     }
 
-    this.renderCards(cards);
+    this.renderCards();
   }
 
   renderCards() {

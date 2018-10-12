@@ -149,16 +149,12 @@ button {
   cursor: pointer;
   color: #FFF;
   background: #8bbc37;
-  -webkit-box-shadow: 0 3px 1px #64950d;
-     -moz-box-shadow: 0 3px 1px #64950d;
-          box-shadow: 0 3px 1px #64950d;
+  box-shadow: 0 3px 1px #64950d;
 
   border: 0;
   padding: 10px;
   margin: 20px auto;
-  -webkit-border-radius: 5px;
-     -moz-border-radius: 5px;
-          border-radius: 5px; 
+  border-radius: 5px; 
   display: block;
   text-decoration: none;
   text-align: center;
@@ -170,58 +166,6 @@ button:disabled {
   cursor: auto;
 }
 
-/* 
-.draw-border {
-  box-shadow: inset 0 0 0 4px #58afd1;
-  color: cyan;
-  transition: color 0.25s 0.0833333333s;
-  position: relative;
-}
-.draw-border::before, .draw-border::after {
-  border: 0 solid transparent;
-  box-sizing: border-box;
-  content: '';
-  pointer-events: none;
-  position: absolute;
-  width: 0;
-  height: 0;
-  bottom: 0;
-  right: 0;
-}
-.draw-border::before {
-  border-bottom-width: 4px;
-  border-left-width: 4px;
-}
-.draw-border::after {
-  border-top-width: 4px;
-  border-right-width: 4px;
-}
-.draw-border:hover {
-  color: #FF9A56;
-}
-.draw-border:hover::before, .draw-border:hover::after {
-  border-color: #FF9A56;
-  transition: border-color 0s, width 0.25s, height 0.25s;
-  width: 100%;
-  height: 100%;
-}
-.draw-border:hover::before {
-  transition-delay: 0s, 0s, 0.25s;
-}
-.draw-border:hover::after {
-  transition-delay: 0s, 0.25s, 0s;
-}
-
-.startGame-btn {
-    display: block;
-    width: 150px;
-    height: 40px;
-    font-size: 16px;
-    text-align: center;
-    margin: 0 auto;
-}
-
- */
 .card {
   position: relative;
   width: 200px;
@@ -234,8 +178,6 @@ button:disabled {
 
 .card:hover {
   cursor: pointer;
-  -webkit-box-shadow: 0px 10px 5px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 10px 5px 0px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 10px 5px 0px rgba(0, 0, 0, 0.75);
   transition: all 0.3s ease-in;
 }
