@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../assets/css/app.css";
 import Card from "./card";
-import HighScoreList from "./HighScoreList"
+import HighScoreList from "./highscorelist"
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faHeart,
@@ -58,7 +58,6 @@ class App extends Component {
     this.startNewGame()
   }
 
-  _render
   render() {
     const { numberOfAttempts, gamesPlayed, accuracy } = this.state;
     return (
