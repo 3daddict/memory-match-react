@@ -74,10 +74,6 @@ class App extends Component {
             <span className="stat">Attempts: {numberOfAttempts}</span>
             <span className="stat">Accuracy: {accuracy}%</span>
           </p>
-
-          <h1 id="numberOfAttempts">
-            {this.state.numberOfAttempts} - Attempts
-          </h1>
           
           <div className="gamecomplete">
             <p id="gc" />
