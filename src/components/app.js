@@ -148,7 +148,6 @@ class App extends Component {
     if (this.cards.length == 0) {
       document.getElementById("gc").innerHTML =
         "Game Complete in " + this.state.numberOfAttempts + "   Attempts";
-      document.getElementById("numberOfAttempts").style.display = "none";
       document.getElementById("buttondiv").style.display = "none";
       //   console.log(
       //     "Game Complete in" + this.state.numberOfAttempts + "attempts"
