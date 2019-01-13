@@ -158,14 +158,34 @@ class App extends Component {
   handleClick(index) {
     const newRevealStates = this.state.cardRevealStates;
     newRevealStates[index] = true;
-
-    this.setState({
-      cardRevealStates: newRevealStates
+    //cards actively flipped counter 
+    let cardsFlipped = 0;
+    
+    //adds how many active cards flipped there are
+    newRevealStates.forEach(function(el) {
+      if (el === true) {
+        cardsFlipped++;
+      } else {
+        return;
+      }
     });
 
-    // console.log("Clicked");
-    this.checkForMatch();
-    this.addNumberOfClicks();
+    //checks if only two cards are flipped
+    if (cardsFlipped < 3) {
+      //if only 2 are flipped it continues on
+      this.setState({
+        cardRevealStates: newRevealStates
+      });
+
+      this.checkForMatch();
+
+      this.addNumberOfClicks();
+    } else {
+      //if more then two are it returns and doesn't let you flip another
+      return;
+    }
+
+    
   }
 
   addNumberOfClicks() {
