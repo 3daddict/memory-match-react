@@ -42,6 +42,7 @@ class App extends Component {
       accuracy: 0,
       highScores: []
     };
+    // console.log(this.state.cardRevealStates);
 
     this.handleClick = this.handleClick.bind(this);
     this.startNewGame = this.startNewGame.bind(this);
@@ -58,7 +59,7 @@ class App extends Component {
   }
 
   render() {
-    const { numberOfAttempts, gamesPlayed, accuracy, cardRevealStates, highScores } = this.state;
+    const { numberOfAttempts, gamesPlayed, accuracy } = this.state;
     return (
       <div className="App">
         <div className="col-1">
@@ -82,19 +83,19 @@ class App extends Component {
           <div id="buttondiv">
             <button
               className="randomize-btn"
-              onClick={this.randomizeCards}
+              onClick={() => this.randomizeCards(this.cards)}
             >
               Randomize
             </button>
             <button className="startGame-btn" onClick={this.startNewGame}>
               Start New Game
             </button>
-            <button className="startGame-btn" onClick={this._addHighScore} disabled={cardRevealStates.length}>
+            <button className="startGame-btn" onClick={this._addHighScore} disabled={this.state.cardRevealStates.length}>
               Add High Score
             </button>
           </div>
         </div>
-        <HighScoreList className="col-3" scores={highScores} />
+        <HighScoreList className="col-3" scores={this.state.highScores} />
       </div>
     );
   }
@@ -148,6 +149,9 @@ class App extends Component {
       document.getElementById("gc").innerHTML =
         "Game Complete in " + this.state.numberOfAttempts + "   Attempts";
       document.getElementById("buttondiv").style.display = "none";
+      //   console.log(
+      //     "Game Complete in" + this.state.numberOfAttempts + "attempts"
+      //   );
     }
   }
 
@@ -166,8 +170,22 @@ class App extends Component {
       }
     });
 
-    this.checkForMatch();
-    this.addNumberOfClicks();
+    //checks if only two cards are flipped
+    if (cardsFlipped < 3) {
+      //if only 2 are flipped it continues on
+      this.setState({
+        cardRevealStates: newRevealStates
+      });
+
+      this.checkForMatch();
+
+      this.addNumberOfClicks();
+    } else {
+      //if more then two are it returns and doesn't let you flip another
+      return;
+    }
+
+    
   }
 
   addNumberOfClicks() {
@@ -198,8 +216,8 @@ class App extends Component {
     });
   }
 
-  randomizeCards() {
-    var currentIndex = this.cards.length,
+  randomizeCards(cards) {
+    var currentIndex = cards.length,
       temporaryValue,
       randomIndex;
 
@@ -207,12 +225,12 @@ class App extends Component {
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
 
-      temporaryValue = this.cards[currentIndex];
-      this.cards[currentIndex] = this.cards[randomIndex];
-      this.cards[randomIndex] = temporaryValue;
+      temporaryValue = cards[currentIndex];
+      cards[currentIndex] = cards[randomIndex];
+      cards[randomIndex] = temporaryValue;
     }
 
-    this.renderCards();
+    this.renderCards(cards);
   }
 
   renderCards() {
