@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../assets/css/app.css";
 import Card from "./card";
-import HighScoreList from "./HighScoreList"
+import HighScoreList from "./highscorelist"
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faHeart,
@@ -154,9 +154,16 @@ class App extends Component {
   handleClick(index) {
     const newRevealStates = this.state.cardRevealStates;
     newRevealStates[index] = true;
-
-    this.setState({
-      cardRevealStates: newRevealStates
+    //cards actively flipped counter 
+    let cardsFlipped = 0;
+    
+    //adds how many active cards flipped there are
+    newRevealStates.forEach(function(el) {
+      if (el === true) {
+        cardsFlipped++;
+      } else {
+        return;
+      }
     });
 
     this.checkForMatch();
