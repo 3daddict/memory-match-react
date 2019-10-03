@@ -53,6 +53,7 @@ const App = ()=>{
 
   const _addHighScore =()=> {
     setState({
+      ...state,
       highScores: [...state.highScores, state.numberOfAttempts].sort()
     });
     startNewGame();
@@ -62,6 +63,7 @@ const App = ()=>{
     setTimeout(() => {
       setState(
         {
+          ...state,
           cardRevealStates: new Array(cards.length).fill(false)
         },
         onSetState()
@@ -89,6 +91,7 @@ const App = ()=>{
 
   const addNumberOfAttempts = () => {
     setState(prevState => ({
+      ...state,
       numberOfAttempts: prevState.numberOfAttempts + 1
     }));
   }
@@ -170,6 +173,7 @@ const App = ()=>{
       );
   
       setState({
+        ...state,
         accuracy: accuracy
       });
     }
