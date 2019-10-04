@@ -31,10 +31,7 @@ const App = ()=>{
     "dice",
     "bicycle"
   ];
-    
-  let cards = [...cardsToPopulate];
-  console.log(`cards are now right ${cardDeck}`);
-  
+     
   // const [cards, setCards] = useState(cardsToPopulate);
   // const [cardRevealStates, setCardRevealStates] = useState(new Array(cards.length).fill(false));
   // const [numberOfAttempts, setNumberOfAttempts] = useState(0);
@@ -49,17 +46,33 @@ const App = ()=>{
     numberOfClicks: 0,
     gamesPlayed: 1,
     accuracy: 0,
-    highScores: []
+    highScores: [5,20,25]
   });
 
+  let karenHighScore = [...state.highScores, ...state.numberOfAttempts];
+  let karenLength = karenHighScore.length;
+    console.log({karenHighScore}, {karenLength});
+
+    
   const _addHighScore =()=> {
     setState({
       ...state,
       highScores: [...state.highScores, state.numberOfAttempts].sort()
+
+
     });
-    // console.log(`checking here ${state.cardRevealStates.length}`);
+    
     startNewGame();
   };
+
+  const _karenAddHighScore = ()=>{
+    setState({
+      ...state,
+      highScores: [...state.highScores, state.numberOfAttempts].sort()
+
+    });
+    console.log({state});
+  }
   
   const hideCards =(onSetState = () => {})=> {
     setTimeout(() => {
@@ -115,17 +128,19 @@ const App = ()=>{
   const checkForMatch = () => {
     const revealedCards = getRevealedCards();
     console.log({revealedCards});
+    console.log(`revealedCards length ${revealedCards.length}`);
+    console.log(`cardDeck length == ${cardDeck.length}`);
     if (revealedCards.length === 2) {
       if (isMatch(revealedCards)) {
-        // console.log(`match!`);
         removeMatches(revealedCards[0]);
       }
         hideCards(() => {
         updateAccuracy();
       });
     }
-    if (cardDeck.length == 0) {
-      document.getElementById("gc").innerHTML =
+
+    if (cardDeck.length < 3) {
+       document.getElementById("gc").innerHTML =
         "Game Complete in " + state.numberOfAttempts + "   Attempts";
       document.getElementById("buttondiv").style.display = "none";
     }
@@ -215,7 +230,6 @@ const App = ()=>{
     }
   
     const renderCards = () => {
-      console.log(`I am here ${cardDeck}`);
       return cardDeck.map((icon, index) => (
         <Card
           key={`${icon}-${index}`}
@@ -230,15 +244,18 @@ const App = ()=>{
     const startNewGame = () => {
       const { gamesPlayed } = state;
       // cards = [...cardsToPopulate];
-      setCardDeck(cardsToPopulate);
+      
+      setCardDeck([...cardsToPopulate]);
+      console.log(`card deck after new game ${cardDeck}`);
+      console.log(`cardDeck after new game ${cardDeck.length} and ${typeof(cardDeck)}`);
       setState({
         cardRevealStates: new Array(cardDeck.length).fill(false),
-        gamesPlayed: gamesPlayed + 1,
-        accuracy: 0,
         numberOfAttempts: 0,
-        numberOfClicks: 0
+        numberOfClicks: 0,
+        gamesPlayed: gamesPlayed + 1,
+        accuracy: 0
       });
-      console.log(`new state after startNewGame ${state}`);
+      console.log({state});
     }
   
   const {numberOfAttempts, gamesPlayed, accuracy} = state;
@@ -275,6 +292,9 @@ const App = ()=>{
           </button>
           <button className="startGame-btn" onClick={_addHighScore} disabled={state.cardRevealStates.length}>
             Add High Score
+          </button>
+          <button className="startGame-btn" onClick={_karenAddHighScore}>
+            Karen Button
           </button>
         </div>
       </div>
