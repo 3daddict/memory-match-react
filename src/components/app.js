@@ -38,8 +38,7 @@ const App = ()=>{
     numberOfAttempts: 0,
     numberOfClicks: 0,
     gamesPlayed: 0,
-    // accuracy: 0,
-    accuracy: 20,
+    accuracy: 0,
     highScores: [5,20,25]
   });
 
@@ -67,7 +66,6 @@ const App = ()=>{
   }
 
   const removeMatches = (match)=> {
-    // console.log(`matched cards are ${match}`)
     hideCards(() => {
       setCardDeck(removeMatchedCardsFromList(match));
     });
@@ -83,43 +81,25 @@ const App = ()=>{
   }
 
   const removeMatchedCardsFromList =(match) => {
-    // const result = cards[0]
-    // console.log(`in removeMatched cards heart ${match} ${cards[0]===match}`);
     const removedCards = cardDeck.filter(card => card !== match);
     setState({
       ...state,
       cardRevealStates : removedCards
     })
-    console.log({removedCards});
     return removedCards;
   }
 
-  // const addNumberOfAttempts = () => {
-  //   setState(prevState => ({
-  //     ...state,
-  //     numberOfAttempts: prevState.numberOfAttempts + 1
-  //   }));
-  //   // setState({
-  //   //   ...state,
-  //   //   numberOfAttempts: numberOfAttempts + 1
-  //   // });
-  // }
-
   const checkForMatch = () => {
     const revealedCards = getRevealedCards();
-    // console.log({revealedCards});
-    // console.log(`revealedCards length ${revealedCards.length}`);
-    // console.log(`cardDeck length == ${cardDeck.length}`);
+
     if (revealedCards.length === 2) {
       if (isMatch(revealedCards)) {
         removeMatches(revealedCards[0]);
-        // updateAccuracy();
       }
       hideCards(() => {
         console.log(`where I want to be`);
         updateAccuracy();
       });
-      
     }
     addNumberOfClicks();
 
@@ -127,13 +107,13 @@ const App = ()=>{
        document.getElementById("gc").innerHTML =
         "Game Complete in " + state.numberOfAttempts + "   Attempts";
       document.getElementById("buttondiv").style.display = "none";
+      if(cardDeck.length <1){
+        startNewGame();
+      }
     }
   }
 
     const handleClick = (index) => {
-      // addNumberOfClicks();
-      // console.log(`state is ${state.numberOfClicks}`);
-      // console.log({index});
       const newRevealStates = state.cardRevealStates;
       
       newRevealStates[index] = true;
@@ -171,19 +151,38 @@ const App = ()=>{
     const addNumberOfClicks = () => {
       const { numberOfClicks } = state;
       const clicks = numberOfClicks + 1;
-      setState({
-        ...state,
-        numberOfClicks: clicks,
-        accuracy: accuracy+1
-      });
+
+      ///accuracy
+      const {numberOfAttempts} = state;
+      const numPossibleCorrect = (cardsToPopulate.length-cardDeck.length)/2;
+      const userAttempts = numberOfAttempts;
+      const updateAccuracyRate = Math.floor((numPossibleCorrect/userAttempts)*100);
+
+
+      (numPossibleCorrect>=1) ? 
+        setState({
+          ...state,
+          numberOfClicks: clicks,
+          accuracy: updateAccuracyRate
+        })
+        : 
+        setState({
+          ...state,
+          numberOfClicks: clicks
+        });
+      console.log(`userAttempts are ${userAttempts} num possible is ${numPossibleCorrect}`);
+      console.log({updateAccuracyRate});
+
     }
   
+    //might not use item below 
     const updateAccuracy = () => {
-      let fakeAccuracy = 45;
-      setState({
-        ...state,
-        accuracy : fakeAccuracy
-      });
+
+      // let fakeAccuracy = 45;
+      // setState({
+      //   ...state,
+      //   accuracy : fakeAccuracy
+      // });
       console.log(`in accuracy`);
       const { numberOfClicks, numberOfAttempts } = state;
       // console.log({clicks});
@@ -239,18 +238,19 @@ const App = ()=>{
   
     const startNewGame = () => {
       const { gamesPlayed } = state;
-      // cards = [...cardsToPopulate];
-      
+     
       setCardDeck([...cardsToPopulate]);
-      console.log(`card deck after new game ${cardDeck}`);
-      console.log(`cardDeck after new game ${cardDeck.length} and ${typeof(cardDeck)}`);
+      // console.log(`card deck after new game ${cardDeck}`);
+      // console.log(`cardDeck after new game ${cardDeck.length} and ${typeof(cardDeck)}`);
       setState({
+        ...state,
         cardRevealStates: new Array(cardDeck.length).fill(false),
         numberOfAttempts: 0,
         numberOfClicks: 0,
         gamesPlayed: gamesPlayed + 1,
         accuracy: 0
       });
+
     }
   
   const {numberOfAttempts, gamesPlayed, accuracy} = state;
