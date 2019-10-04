@@ -70,6 +70,7 @@ const App = ()=>{
       setCardDeck(removeMatchedCardsFromList(match));
     });
     hideCards();
+
   }
 
   const isMatch =(cardsArr)=> {
@@ -103,13 +104,13 @@ const App = ()=>{
     }
     addNumberOfClicks();
 
-    if (cardDeck.length < 3) {
+    if (cardDeck.length < 1) {
        document.getElementById("gc").innerHTML =
         "Game Complete in " + state.numberOfAttempts + "   Attempts";
-      document.getElementById("buttondiv").style.display = "none";
-      if(cardDeck.length <1){
-        startNewGame();
-      }
+      // document.getElementById("buttondiv").style.display = "none";
+      // if(cardDeck.length <1){
+      //   startNewGame();
+      // }
     }
   }
 
@@ -238,10 +239,7 @@ const App = ()=>{
   
     const startNewGame = () => {
       const { gamesPlayed } = state;
-     
       setCardDeck([...cardsToPopulate]);
-      // console.log(`card deck after new game ${cardDeck}`);
-      // console.log(`cardDeck after new game ${cardDeck.length} and ${typeof(cardDeck)}`);
       setState({
         ...state,
         cardRevealStates: new Array(cardDeck.length).fill(false),
@@ -250,7 +248,6 @@ const App = ()=>{
         gamesPlayed: gamesPlayed + 1,
         accuracy: 0
       });
-
     }
   
   const {numberOfAttempts, gamesPlayed, accuracy} = state;
