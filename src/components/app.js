@@ -33,6 +33,7 @@ const App = ()=>{
   ];
     
   let cards = [...cardsToPopulate];
+  console.log(`cards are now right ${cardDeck}`);
   
   // const [cards, setCards] = useState(cardsToPopulate);
   // const [cardRevealStates, setCardRevealStates] = useState(new Array(cards.length).fill(false));
@@ -41,9 +42,9 @@ const App = ()=>{
   // const [gamesPlayed, setGamesPlayed] = useState(1);
   // const [accuracy, setAccuracy] = useState(0);
   // const [highScores, setHighScores] = [];
-
+  const [cardDeck, setCardDeck] = useState(cardsToPopulate);
   const [state, setState] = useState({
-    cardRevealStates: new Array(cards.length).fill(false),
+    cardRevealStates: new Array(cardDeck.length).fill(false),
     numberOfAttempts: 0,
     numberOfClicks: 0,
     gamesPlayed: 1,
@@ -56,6 +57,7 @@ const App = ()=>{
       ...state,
       highScores: [...state.highScores, state.numberOfAttempts].sort()
     });
+    // console.log(`checking here ${state.cardRevealStates.length}`);
     startNewGame();
   };
   
@@ -64,7 +66,7 @@ const App = ()=>{
       setState(
         {
           ...state,
-          cardRevealStates: new Array(cards.length).fill(false)
+          cardRevealStates: new Array(cardDeck.length).fill(false)
         },
         onSetState()
       );
@@ -72,9 +74,15 @@ const App = ()=>{
   }
 
   const removeMatches = (match)=> {
+    // console.log(`matched cards are ${match}`)
     hideCards(() => {
-      cards = removeMatchedCardsFromList(match);
+      // cards = ;
+      setCardDeck(removeMatchedCardsFromList(match));
     });
+    hideCards();
+    // cards = ["bicycle", "bicycle"];
+    // renderCards(cardDeck);
+    // console.log({cards});
   }
 
   const isMatch =(cardsArr)=> {
@@ -82,11 +90,19 @@ const App = ()=>{
   }
 
   const getRevealedCards = () => {
-    return cards.filter((_, i) => state.cardRevealStates[i]);
+    return cardDeck.filter((_, i) => state.cardRevealStates[i]);
   }
 
   const removeMatchedCardsFromList =(match) => {
-    return cards.filter(card => card !== match);
+    // const result = cards[0]
+    // console.log(`in removeMatched cards heart ${match} ${cards[0]===match}`);
+    const removedCards = cardDeck.filter(card => card !== match);
+    setState({
+      ...state,
+      cardRevealStates : removedCards
+    })
+    console.log({removedCards});
+    return removedCards;
   }
 
   const addNumberOfAttempts = () => {
@@ -98,15 +114,17 @@ const App = ()=>{
 
   const checkForMatch = () => {
     const revealedCards = getRevealedCards();
+    console.log({revealedCards});
     if (revealedCards.length === 2) {
       if (isMatch(revealedCards)) {
+        // console.log(`match!`);
         removeMatches(revealedCards[0]);
       }
         hideCards(() => {
         updateAccuracy();
       });
     }
-    if (cards.length == 0) {
+    if (cardDeck.length == 0) {
       document.getElementById("gc").innerHTML =
         "Game Complete in " + state.numberOfAttempts + "   Attempts";
       document.getElementById("buttondiv").style.display = "none";
@@ -114,10 +132,11 @@ const App = ()=>{
   }
 
     const handleClick = (index) => {
-      console.log({index});
+      // console.log({index});
       const newRevealStates = state.cardRevealStates;
       
       newRevealStates[index] = true;
+      
       console.log({newRevealStates});
       //cards actively flipped counter 
       let cardsFlipped = 0;
@@ -164,7 +183,7 @@ const App = ()=>{
       const clicks = numberOfClicks + 1;
       const attempts = Math.floor(clicks / 2);
       const originalCardsLength = cardsToPopulate.length;
-      const currentCardsLength = cards.length;
+      const currentCardsLength = cardDeck.length;
       const revealedCards = Math.ceil(
         (originalCardsLength - currentCardsLength) / 2
       );
@@ -187,17 +206,17 @@ const App = ()=>{
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
   
-        temporaryValue = cards[currentIndex];
-        cards[currentIndex] = cards[randomIndex];
-        cards[randomIndex] = temporaryValue;
+        temporaryValue = cardDeck[currentIndex];
+        cardDeck[currentIndex] = cardDeck[randomIndex];
+        cardDeck[randomIndex] = temporaryValue;
       }
-  
-      renderCards(cards);
+      console.log(`cards to be rerendered are ${cardDeck}`);
+      renderCards(cardDeck);
     }
   
     const renderCards = () => {
-      console.log(`I am here ${cards}`);
-      return cards.map((icon, index) => (
+      console.log(`I am here ${cardDeck}`);
+      return cardDeck.map((icon, index) => (
         <Card
           key={`${icon}-${index}`}
           clickCallback={handleClick}
@@ -210,14 +229,16 @@ const App = ()=>{
   
     const startNewGame = () => {
       const { gamesPlayed } = state;
-      cards = [...cardsToPopulate];
+      // cards = [...cardsToPopulate];
+      setCardDeck(cardsToPopulate);
       setState({
-        cardRevealStates: new Array(cards.length).fill(false),
+        cardRevealStates: new Array(cardDeck.length).fill(false),
         gamesPlayed: gamesPlayed + 1,
         accuracy: 0,
         numberOfAttempts: 0,
         numberOfClicks: 0
       });
+      console.log(`new state after startNewGame ${state}`);
     }
   
   const {numberOfAttempts, gamesPlayed, accuracy} = state;
@@ -245,7 +266,7 @@ const App = ()=>{
         <div id="buttondiv">
           <button
             className="randomize-btn"
-            onClick={() => randomizeCards(cards)}
+            onClick={() => randomizeCards(cardDeck)}
           >
             Randomize
           </button>
