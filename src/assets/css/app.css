@@ -36,7 +36,7 @@ body {
 
 body {
   font-family: "k2dregular", sans-serif;
-  background: #f5f5f5;
+  background:  #A1BBD0;
   overflow: hidden;
   padding: 0.5em;
 }
@@ -121,8 +121,8 @@ body {
 button {
   cursor: pointer;
   color: #fff;
-  background: #8bbc37;
-  box-shadow: 0 3px 1px #64950d;
+  background: #3F4234;
+  box-shadow: 0 3px 1px #white;
 
   border: 0;
   padding: 10px;
