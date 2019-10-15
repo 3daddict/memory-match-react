@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+// import React, { Component } from "react";
+import React, { useState } from 'react';
 import "../assets/css/app.css";
 import Card from "./card";
 import HighScoreList from "./highscorelist"
@@ -14,248 +15,291 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 library.add(faHeart, faSpa, faAnchor, faCube, faDice, faBicycle, faLeaf);
 
-class App extends Component {
-  constructor(props) {
-    super(props);
 
-    this.cardsToPopulate = [
-      "heart",
-      "anchor",
-      "cube",
-      "leaf",
-      "dice",
-      "bicycle",
-      "heart",
-      "anchor",
-      "cube",
-      "leaf",
-      "dice",
-      "bicycle"
-    ];
-    this.cards = [...this.cardsToPopulate];
+const App = ()=>{
+  const cardsToPopulate= [
+    "heart",
+    "anchor",
+    "cube",
+    "leaf",
+    "dice",
+    "bicycle",
+    "heart",
+    "anchor",
+    "cube",
+    "leaf",
+    "dice",
+    "bicycle"
+  ];
 
-    this.state = {
-      cardRevealStates: new Array(this.cards.length).fill(false),
-      numberOfAttempts: 0,
-      numberOfClicks: 0,
-      gamesPlayed: 1,
-      accuracy: 0,
-      highScores: []
-    };
-    // console.log(this.state.cardRevealStates);
+  const [cardDeck, setCardDeck] = useState(cardsToPopulate);
+  const [state, setState] = useState({
+    cardRevealStates: new Array(cardDeck.length).fill(false),
+    numberOfAttempts: 0,
+    numberOfClicks: 0,
+    gamesPlayed: 0,
+    accuracy: 0,
+    highScores: [5,20,25]
+  });
 
-    this.handleClick = this.handleClick.bind(this);
-    this.startNewGame = this.startNewGame.bind(this);
-    this.addNumberOfClicks = this.addNumberOfClicks.bind(this);
-    this._addHighScore = this._addHighScore.bind(this);
-  }
-
-
-  _addHighScore() {
-    this.setState({
-      highScores: [...this.state.highScores, this.state.numberOfAttempts].sort()
-    })
-    this.startNewGame()
-  }
-
-  render() {
-    const { numberOfAttempts, gamesPlayed, accuracy } = this.state;
-    return (
-      <div className="App">
-        <div className="col-1">
-          <div className="links">
-            <a href="#">Game</a>
-            <a href="#">Contributors</a>
-          </div>
-        </div>
-        <div className="col-2">
-          <p id="gameStats">
-            <span className="stat">Games Played: {gamesPlayed}</span>
-            <span className="stat">Attempts: {numberOfAttempts}</span>
-            <span className="stat">Accuracy: {accuracy}%</span>
-          </p>
-          
-          <div className="gamecomplete">
-            <p id="gc" />
-          </div>
-
-          <div id="gameArea">{this.renderCards()}</div>
-          <div id="buttondiv">
-            <button
-              className="randomize-btn"
-              onClick={() => this.randomizeCards(this.cards)}
-            >
-              Randomize
-            </button>
-            <button className="startGame-btn" onClick={this.startNewGame}>
-              Start New Game
-            </button>
-            <button className="startGame-btn" onClick={this._addHighScore} disabled={this.state.cardRevealStates.length}>
-              Add High Score
-            </button>
-          </div>
-        </div>
-        <HighScoreList className="col-3" scores={this.state.highScores} />
-      </div>
-    );
-  }
-
-
-  hideCards(onSetState = () => {}) {
+    
+  const _addHighScore =()=> {
+    setState({
+      ...state,
+      highScores: [...state.highScores, state.numberOfAttempts].sort()
+    });
+    startNewGame();
+  };
+ 
+  const hideCards =(onSetState = () => {})=> {
     setTimeout(() => {
-      this.setState(
+      setState(
         {
-          cardRevealStates: new Array(this.cards.length).fill(false)
+          ...state,
+          cardRevealStates: new Array(cardDeck.length).fill(false),
+          numberOfAttempts: numberOfAttempts+1
         },
         onSetState()
       );
     }, 500);
-  }
-  removeMatches(match) {
-    this.hideCards(() => {
-      this.cards = this.removeMatchedCardsFromList(match);
-    });
+
   }
 
-  isMatch(cardsArr) {
+  const removeMatches = (match)=> {
+    hideCards(() => {
+      setCardDeck(removeMatchedCardsFromList(match));
+    });
+    hideCards();
+
+  }
+
+  const isMatch =(cardsArr)=> {
     return cardsArr.every((val, i, arr) => val === arr[0]);
   }
 
-  getRevealedCards() {
-    return this.cards.filter((_, i) => this.state.cardRevealStates[i]);
+  const getRevealedCards = () => {
+    return cardDeck.filter((_, i) => state.cardRevealStates[i]);
   }
 
-  removeMatchedCardsFromList(match) {
-    return this.cards.filter(card => card !== match);
+  const removeMatchedCardsFromList =(match) => {
+    const removedCards = cardDeck.filter(card => card !== match);
+    setState({
+      ...state,
+      cardRevealStates : removedCards
+    })
+    return removedCards;
   }
 
-  addNumberOfAttempts() {
-    this.setState(prevState => ({
-      numberOfAttempts: prevState.numberOfAttempts + 1
-    }));
-  }
+  const checkForMatch = () => {
+    const revealedCards = getRevealedCards();
 
-  checkForMatch() {
-    const revealedCards = this.getRevealedCards();
     if (revealedCards.length === 2) {
-      if (this.isMatch(revealedCards)) {
-        this.removeMatches(revealedCards[0]);
+      if (isMatch(revealedCards)) {
+        removeMatches(revealedCards[0]);
       }
-      this.hideCards(() => {
-        this.updateAccuracy();
+      hideCards(() => {
+        console.log(`where I want to be`);
+        updateAccuracy();
       });
     }
-    if (this.cards.length == 0) {
-      document.getElementById("gc").innerHTML =
-        "Game Complete in " + this.state.numberOfAttempts + "   Attempts";
-      document.getElementById("buttondiv").style.display = "none";
-      //   console.log(
-      //     "Game Complete in" + this.state.numberOfAttempts + "attempts"
-      //   );
+    addNumberOfClicks();
+
+    if (cardDeck.length < 1) {
+       document.getElementById("gc").innerHTML =
+        "Game Complete in " + state.numberOfAttempts + "   Attempts";
+      // document.getElementById("buttondiv").style.display = "none";
+      // if(cardDeck.length <1){
+      //   startNewGame();
+      // }
     }
   }
 
-  handleClick(index) {
-    const newRevealStates = this.state.cardRevealStates;
-    newRevealStates[index] = true;
-    //cards actively flipped counter 
-    let cardsFlipped = 0;
-    
-    //adds how many active cards flipped there are
-    newRevealStates.forEach(function(el) {
-      if (el === true) {
-        cardsFlipped++;
+    const handleClick = (index) => {
+      const newRevealStates = state.cardRevealStates;
+      
+      newRevealStates[index] = true;
+      
+      console.log({newRevealStates});
+      //cards actively flipped counter 
+      let cardsFlipped = 0;
+      
+      //adds how many active cards flipped there are
+      newRevealStates.forEach(function(el) {
+        if (el === true) {
+          cardsFlipped++;
+        } else {
+          return;
+        }
+      });
+
+      //checks if only two cards are flipped
+      if (cardsFlipped < 3) {
+        //if only 2 are flipped it continues on
+        setState({
+          ...state,
+          cardRevealStates: newRevealStates
+        });
+
+        checkForMatch();
+
+        
       } else {
+        //if more then two are it returns and doesn't let you flip another
         return;
       }
-    });
+    }
 
-    //checks if only two cards are flipped
-    if (cardsFlipped < 3) {
-      //if only 2 are flipped it continues on
-      this.setState({
-        cardRevealStates: newRevealStates
+    const addNumberOfClicks = () => {
+      const { numberOfClicks } = state;
+      const clicks = numberOfClicks + 1;
+
+      ///accuracy
+      const {numberOfAttempts} = state;
+      const numPossibleCorrect = (cardsToPopulate.length-cardDeck.length)/2;
+      const userAttempts = numberOfAttempts;
+      const updateAccuracyRate = Math.floor((numPossibleCorrect/userAttempts)*100);
+
+
+      (numPossibleCorrect>=1) ? 
+        setState({
+          ...state,
+          numberOfClicks: clicks,
+          accuracy: updateAccuracyRate
+        })
+        : 
+        setState({
+          ...state,
+          numberOfClicks: clicks
+        });
+      console.log(`userAttempts are ${userAttempts} num possible is ${numPossibleCorrect}`);
+      console.log({updateAccuracyRate});
+
+    }
+  
+    //might not use item below 
+    const updateAccuracy = () => {
+
+      // let fakeAccuracy = 45;
+      // setState({
+      //   ...state,
+      //   accuracy : fakeAccuracy
+      // });
+      console.log(`in accuracy`);
+      const { numberOfClicks, numberOfAttempts } = state;
+      // console.log({clicks});
+      // const attempts = Math.floor(numberOfClicks / 2);
+
+      const originalCardsLength = cardsToPopulate.length;
+      const currentCardsLength = cardDeck.length;
+      
+      // console.log({originalCardsLength});
+      // console.log({currentCardsLength});
+      const revealedCards = Math.ceil(
+        (originalCardsLength - currentCardsLength) / 2
+      );
+      const updateAccuracy = Math.floor(
+        revealedCards ? (revealedCards / numberOfAttempts) * 100 : 0
+      );
+      console.log({updateAccuracy});
+      console.log(`accuracy is ${accuracy}`);
+
+
+
+      console.log({state});
+    }
+
+    const randomizeCards =(cards) => {
+      var currentIndex = cards.length,
+        temporaryValue,
+        randomIndex;
+  
+      while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+  
+        temporaryValue = cardDeck[currentIndex];
+        cardDeck[currentIndex] = cardDeck[randomIndex];
+        cardDeck[randomIndex] = temporaryValue;
+      }
+      console.log(`cards to be rerendered are ${cardDeck}`);
+      renderCards(cardDeck);
+    }
+  
+    const renderCards = () => {
+      return cardDeck.map((icon, index) => (
+        <Card
+          key={`${icon}-${index}`}
+          clickCallback={handleClick}
+          index={index}
+          icon={icon}
+          display={state.cardRevealStates[index]}
+        />
+      ));
+    }
+  
+    const startNewGame = () => {
+      const { gamesPlayed } = state;
+      setCardDeck([...cardsToPopulate]);
+      setState({
+        ...state,
+        cardRevealStates: new Array(cardDeck.length).fill(false),
+        numberOfAttempts: 0,
+        numberOfClicks: 0,
+        gamesPlayed: gamesPlayed + 1,
+        accuracy: 0
       });
-
-      this.checkForMatch();
-
-      this.addNumberOfClicks();
-    } else {
-      //if more then two are it returns and doesn't let you flip another
-      return;
     }
+  
+  const {numberOfAttempts, gamesPlayed, accuracy} = state;
 
+  return (
+    <div className="App">
+      <div className="col-1">
+        <div className="links">
+          <a href="#">Game</a>
+          <a href="#">Contributors</a>
+        </div>
+      </div>
+      <div className="col-2">
+        <p id="gameStats">
+          <span className="stat">Games Played: {gamesPlayed}</span>
+          <span className="stat">Attempts: {numberOfAttempts}</span>
+          <span className="stat">Accuracy: {accuracy}%</span>
+        </p>
+        
+        <div className="gamecomplete">
+          <p id="gc" />
+        </div>
+
+        <div id="gameArea">{renderCards()}</div>
+        <div id="buttondiv">
+          <button
+            className="randomize-btn"
+            onClick={() => randomizeCards(cardDeck)}
+          >
+            Randomize
+          </button>
+          <button className="startGame-btn" onClick={startNewGame}>
+            Start New Game
+          </button>
+          <button className="startGame-btn" onClick={_addHighScore} disabled={state.cardRevealStates.length}>
+            Add High Score
+          </button>
+          <div>
+            Status
+            <ul>
+              <li>State Attempts {state.numberOfAttempts}</li>
+              <li>State Clicks {state.numberOfClicks}</li>
+              <li>State Accuracy {state.accuracy}</li>
+              <li>State CardsRevealed {state.cardRevealStates.length}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <HighScoreList className="col-3" scores={state.highScores} />
+    </div>
+  );
     
-  }
-
-  addNumberOfClicks() {
-    const { numberOfClicks } = this.state;
-    const clicks = numberOfClicks + 1;
-    const attempts = Math.floor(clicks / 2);
-    this.setState({
-      numberOfClicks: clicks,
-      numberOfAttempts: attempts
-    });
-  }
-
-  updateAccuracy() {
-    const { numberOfClicks } = this.state;
-    const clicks = numberOfClicks + 1;
-    const attempts = Math.floor(clicks / 2);
-    const originalCardsLength = this.cardsToPopulate.length;
-    const currentCardsLength = this.cards.length;
-    const revealedCards = Math.ceil(
-      (originalCardsLength - currentCardsLength) / 2
-    );
-    const accuracy = Math.floor(
-      revealedCards ? (revealedCards / attempts) * 100 : 0
-    );
-
-    this.setState({
-      accuracy: accuracy
-    });
-  }
-
-  randomizeCards(cards) {
-    var currentIndex = cards.length,
-      temporaryValue,
-      randomIndex;
-
-    while (0 !== currentIndex) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      temporaryValue = cards[currentIndex];
-      cards[currentIndex] = cards[randomIndex];
-      cards[randomIndex] = temporaryValue;
-    }
-
-    this.renderCards(cards);
-  }
-
-  renderCards() {
-    return this.cards.map((icon, index) => (
-      <Card
-        key={`${icon}-${index}`}
-        clickCallback={this.handleClick}
-        index={index}
-        icon={icon}
-        display={this.state.cardRevealStates[index]}
-      />
-    ));
-  }
-
-  startNewGame() {
-    const { gamesPlayed } = this.state;
-    this.cards = [...this.cardsToPopulate];
-    this.setState({
-      cardRevealStates: new Array(this.cards.length).fill(false),
-      gamesPlayed: gamesPlayed + 1,
-      accuracy: 0,
-      numberOfAttempts: 0,
-      numberOfClicks: 0
-    });
-  }
 }
 
 export default App;
