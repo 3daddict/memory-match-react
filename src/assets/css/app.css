@@ -113,6 +113,14 @@ body {
   align-items: center;
 }
 
+#cardArea {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  max-width:600px;
+}
+
 #buttondiv {
   display: flex;
   justify-content: space-around;
@@ -149,6 +157,7 @@ button:disabled {
   border: 1px black solid;
   justify-self: center;
   transition: all 0.3s ease-in;
+  flex-basis: 150px;
 }
 
 .card:hover {

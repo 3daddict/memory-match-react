@@ -79,7 +79,11 @@ class App extends Component {
             <p id="gc" />
           </div>
 
-          <div id="gameArea">{this.renderCards()}</div>
+          <div id="gameArea">
+            <div id="cardArea">
+              {this.renderCards()}
+            </div>
+          </div>
           <div id="buttondiv">
             <button
               className="randomize-btn"
